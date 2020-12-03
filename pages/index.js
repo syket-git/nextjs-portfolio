@@ -1,65 +1,45 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import About from '../components/About';
+import Contact from '../components/Contact';
+import Footer from '../components/Footer';
+import Header from '../components/Header';
+import Navigation from '../components/Navigation';
+import Portfolio from '../components/Portfolio';
+import Skills from '../components/Skills';
+import TopFooter from '../components/TopFooter';
+import TopSection from '../components/TopSection';
 
-export default function Home() {
+import { modelData, portfolioData } from '../components/portfolioData';
+import Model from '../components/Model';
+export default function Home({ data, ModelData }) {
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className={styles.footer}>
+    <div id="page-top">
+      <Header />
+      <Navigation />
+      <TopSection />
+      <Portfolio data={data} />
+      <Skills />
+      <About />
+      <Contact />
+      <Footer />
+      <TopFooter />
+      <div className="scroll-to-top d-lg-none position-fixed">
         <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          className="js-scroll-trigger d-block text-center text-white rounded"
+          href="#page-top"
         >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
+          <i className="fa fa-chevron-up"></i>
         </a>
-      </footer>
+      </div>
+      <Model ModelData={ModelData} />
     </div>
-  )
+  );
 }
+
+Home.getInitialProps = async () => {
+  const data = await portfolioData();
+  const ModelData = await modelData();
+  return {
+    data,
+    ModelData,
+  };
+};
